@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>SpeedTest</title>
+        <script src="speedtest.js"></script>
+        <script>
+            
+            window.$ = function(id) {
+                return document.getElementById(id);
+            }
+            
+            function do_the_fucking_test() {
+        
+                var download = new SpeedTest.Download('10mb.bin?' + Math.random());
+                
+                download.on('progress', function(loaded, total, rate) {
+                    
+                    $('percent').innerHTML = Math.round(loaded / total * 100);
+                    $('done').innerHTML = loaded + "/" + total;
+                    $('rate').innerHTML = Math.round(rate / 1000);
+                
+                });
+                
+                
+                download.on('finish', function(report) {
+                
+                });
+                
+                download.start();
+        
+            }
+            
+        </script>
+    </head>
+    <body>
+        <button onclick="do_the_fucking_test()">START DA TEST</button>
+        <p>File: 10mb.bin</p>
+        <p>Done: <span id="done">N/A</span></p>
+        <p>Percent: <span id="percent">N/A</span> %</p>
+        <p>Speed: <span id="rate">N/A</span> kBps</p>
+    </body>
+</html>
