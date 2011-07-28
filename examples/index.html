@@ -12,8 +12,8 @@
             
             function do_the_fucking_test() {
         
-                var latency  = new SpeedTest.Latency('latency.txt?' + Math.random());
-                var download = new SpeedTest.Download('10mb.bin?' + Math.random());
+                var latency  = new SpeedTest.Latency('../samples/empty.bin?' + Math.random());
+                var download = new SpeedTest.Download('../samples/8mb.bin?' + Math.random());
                 
                 latency.on('finish', function(size, time) {
                 
@@ -36,7 +36,7 @@
                 
                 
                 download.on('finish', function(size, time) {
-                    console.log('downloaded '+size+' bytes in '+time+' seconds');
+                    console.log('downloaded '+size+' bytes in '+time+' ms');
                 });
         
 
@@ -48,7 +48,7 @@
     </head> 
     <body> 
         <button onclick="do_the_fucking_test()">START DA TEST</button> 
-        <p>File: 2mb.bin</p> 
+        <p>File: 8mb.bin</p> 
         <p>Latency: <span id="latency">N/A</span> ms</p> 
         <p>Done: <span id="done">N/A</span></p> 
         <p>Percent: <span id="percent">N/A</span> %</p> 
