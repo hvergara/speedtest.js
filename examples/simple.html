@@ -25,7 +25,7 @@
                     
                 });
         
-                /*
+                
                 download.on('progress', function(loaded, total, rate) {
                     
                     $('percent').innerHTML = Math.round(loaded / total * 100);
@@ -33,7 +33,7 @@
                     $('rate').innerHTML = Math.round(rate / 1000);
                 
                 });
-                */
+                
                 
                 download.on('finish', function(size, time) {
                     console.log('downloaded '+size+' bytes in '+time+' seconds');
