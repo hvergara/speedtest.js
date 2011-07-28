@@ -1,9 +1,10 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>SpeedTest</title>
-        <script src="speedtest.js"></script>
-        <script>
+
+<!DOCTYPE html> 
+<html> 
+    <head> 
+        <title>SpeedTest</title> 
+        <script src="../lib/speedtest.js"></script> 
+        <script> 
             
             window.$ = function(id) {
                 return document.getElementById(id);
@@ -11,8 +12,20 @@
             
             function do_the_fucking_test() {
         
+                var latency  = new SpeedTest.Latency('latency.txt?' + Math.random());
                 var download = new SpeedTest.Download('10mb.bin?' + Math.random());
                 
+                latency.on('finish', function(size, time) {
+                
+                    $('latency').innerHTML = time;
+                    
+                    setTimeout(function() {
+                        download.start();
+                    }, 1000);
+                    
+                });
+        
+                /*
                 download.on('progress', function(loaded, total, rate) {
                     
                     $('percent').innerHTML = Math.round(loaded / total * 100);
@@ -20,23 +33,25 @@
                     $('rate').innerHTML = Math.round(rate / 1000);
                 
                 });
+                */
                 
-                
-                download.on('finish', function(report) {
-                
+                download.on('finish', function(size, time) {
+                    console.log('downloaded '+size+' bytes in '+time+' seconds');
                 });
-                
-                download.start();
+        
+
+                latency.start();
         
             }
             
-        </script>
-    </head>
-    <body>
-        <button onclick="do_the_fucking_test()">START DA TEST</button>
-        <p>File: 10mb.bin</p>
-        <p>Done: <span id="done">N/A</span></p>
-        <p>Percent: <span id="percent">N/A</span> %</p>
-        <p>Speed: <span id="rate">N/A</span> kBps</p>
-    </body>
+        </script> 
+    </head> 
+    <body> 
+        <button onclick="do_the_fucking_test()">START DA TEST</button> 
+        <p>File: 2mb.bin</p> 
+        <p>Latency: <span id="latency">N/A</span> ms</p> 
+        <p>Done: <span id="done">N/A</span></p> 
+        <p>Percent: <span id="percent">N/A</span> %</p> 
+        <p>Speed: <span id="rate">N/A</span> kBps</p> 
+    </body> 
 </html>
