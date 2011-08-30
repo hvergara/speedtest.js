@@ -9,13 +9,13 @@
         <script src="lib/speedtest.js"></script>
         
         <style>
-            #results { width: 900px; margin: 0 auto; overflow: hidden; }
+            #results { width: 780px; margin: 0 auto; overflow: hidden; }
             
             #results .digital { 
                 border: 10px solid green;
                 background-color: black; 
                 width: 400px; 
-                height: 150px; 
+                height: 160px; 
                 float: left;
                 color: #7FFF00;
                 position: relative;
@@ -31,9 +31,12 @@
             }
             
             #results .legend {
+                display: block;
                 position: absolute;
+                text-align: center;
                 bottom: 10px;
-                right: 10px;
+                left: 0;
+                width: 100%;
                 text-shadow: 0 0 20px #7FFF00;
             }
             
@@ -42,10 +45,14 @@
             
             div#controls { text-align: center; margin-top: 30px; }
             button { font-size: 20px; }
+            #console { width: 800px; background-color: #CCC; color: #333; padding: 5px; margin: 30px auto;}
         </style>
         
         <script>
             
+            function log(str) {
+                $('#console').text($('#console').text() + "\n" + str);
+            }
             
             function do_the_fucking_test() {
         
@@ -53,7 +60,7 @@
                 var download = new SpeedTest.Download('samples/8mb.bin?' + Math.random());
                 
                 latency.on('finish', function(size, time) {
-                
+                    log('Downloaded '+size+' bytes in '+ time +' ms');                
                     $('#latency .number').text(time);
                     
                     setTimeout(function() {
@@ -63,18 +70,13 @@
                 });
         
                 
-                download.on('progress', function(loaded, total, rate) {
-                    
-//                    $('percent').innerHTML = Math.round(loaded / total * 100);
-  //                  $('done').innerHTML = loaded + "/" + total;
-                    $('#download .number').text(Math.round(rate / 1000));
-    //                $('progress').value = Math.round(loaded / total * 100);
-                
+                download.on('progress', function(loaded, total, rate) {                    
+                    $('#download .number').text(Math.round(rate / 1000));                
                 });
                 
                 
                 download.on('finish', function(size, time) {
-                    console.log('downloaded '+size+' bytes in '+time+' ms');
+                    log('Downloaded '+size+' bytes in '+ time +' ms');
                 });
         
 
@@ -109,8 +111,10 @@
         <p>Speed: <span id="rate">N/A</span> kBps</p> 
         -->
         
-        <button onclick="do_the_fucking_test()">Start</button> 
+            <button onclick="do_the_fucking_test()">Start</button> 
         </div>
+    
+        <pre id="console">Press button Start...</pre>
         
     </body> 
     
