@@ -1,0 +1,118 @@
+<!DOCTYPE html> 
+<html> 
+    <head> 
+        <title>speedtest.js Demo</title>
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+        
+        <script src="lib/compat.js"></script>
+        <script src="lib/speedtest.js"></script>
+        
+        <style>
+            #results { width: 900px; margin: 0 auto; overflow: hidden; }
+            
+            #results .digital { 
+                border: 10px solid green;
+                background-color: black; 
+                width: 400px; 
+                height: 150px; 
+                float: left;
+                color: #7FFF00;
+                position: relative;
+                font-family: Courier;
+            }
+            
+            #results .number {
+                text-align: center;
+                font-size: 120px;
+                padding: 5px;
+                display: block;
+                text-shadow: 0 0 20px #7FFF00;
+            }
+            
+            #results .legend {
+                position: absolute;
+                bottom: 10px;
+                right: 10px;
+                text-shadow: 0 0 20px #7FFF00;
+            }
+            
+            
+            #latency { margin-right: 30px; width: 300px !important;}
+            
+            div#controls { text-align: center; margin-top: 30px; }
+            button { font-size: 20px; }
+        </style>
+        
+        <script>
+            
+            
+            function do_the_fucking_test() {
+        
+                var latency  = new SpeedTest.Latency('samples/empty.bin?' + Math.random());
+                var download = new SpeedTest.Download('samples/8mb.bin?' + Math.random());
+                
+                latency.on('finish', function(size, time) {
+                
+                    $('#latency .number').text(time);
+                    
+                    setTimeout(function() {
+                        download.start();
+                    }, 1000);
+                    
+                });
+        
+                
+                download.on('progress', function(loaded, total, rate) {
+                    
+//                    $('percent').innerHTML = Math.round(loaded / total * 100);
+  //                  $('done').innerHTML = loaded + "/" + total;
+                    $('#download .number').text(Math.round(rate / 1000));
+    //                $('progress').value = Math.round(loaded / total * 100);
+                
+                });
+                
+                
+                download.on('finish', function(size, time) {
+                    console.log('downloaded '+size+' bytes in '+time+' ms');
+                });
+        
+
+                latency.start();
+            }
+            
+        </script> 
+    </head> 
+    
+    <body> 
+<!--        <p>File: 8mb.bin</p>  -->
+        
+        <div id="results">
+            
+            <div class="digital" id="latency">
+                <span class="number">---</span>
+                <span class="legend">ms</span>
+            </div>
+            
+            <div class="digital" id="download">
+                <span class="number">---</span>
+                <span class="legend">kbps</span>
+            </div>
+            
+        </div>
+        
+        <div id="controls">
+        
+        <!--
+        <p>Latency: <span id="latency">N/A</span> ms</p> 
+        <p>Done: <span id="done">N/A</span></p> 
+        <p>Percent: <span id="percent">N/A</span> % <progress id="progress" value="0" max="100"></p>
+        <p>Speed: <span id="rate">N/A</span> kBps</p> 
+        -->
+        
+        <button onclick="do_the_fucking_test()">Start</button> 
+        </div>
+        
+    </body> 
+    
+</html>
