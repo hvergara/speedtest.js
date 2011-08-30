@@ -69,14 +69,15 @@
                     }, 1000);
                     
                 });
+                
+                percent = 0;
         
                 
                 download.on('progress', function(loaded, total, rate) {                    
                     $('#download .number').text(Math.round(rate / 1000));
                     var percent = Math.round(loaded / total * 100);
                     
-                    if(percent % 10 == 5)
-                        log("Download: " + percent + "% done");
+                    $('#percent').attr('value', percent);
                     
                 });
                 
@@ -109,15 +110,8 @@
         </div>
         
         <div id="controls">
-        
-        <!--
-        <p>Latency: <span id="latency">N/A</span> ms</p> 
-        <p>Done: <span id="done">N/A</span></p> 
-        <p>Percent: <span id="percent">N/A</span> % <progress id="progress" value="0" max="100"></p>
-        <p>Speed: <span id="rate">N/A</span> kBps</p> 
-        -->
-        
-            <button onclick="do_the_fucking_test()">Start</button> 
+            <button onclick="do_the_fucking_test()">Start</button>
+            <progress id="percent" value="0" max="100" width="300"></progress>
         </div>
     
         <pre id="console">Press button Start...</pre>
