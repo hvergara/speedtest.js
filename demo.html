@@ -60,7 +60,8 @@
                 var download = new SpeedTest.Download('samples/8mb.bin?' + Math.random());
                 
                 latency.on('finish', function(size, time) {
-                    log('Downloaded '+size+' bytes in '+ time +' ms');                
+                    log('Latency: '+size+' bytes in '+ time +' ms');
+                    
                     $('#latency .number').text(time);
                     
                     setTimeout(function() {
@@ -71,12 +72,17 @@
         
                 
                 download.on('progress', function(loaded, total, rate) {                    
-                    $('#download .number').text(Math.round(rate / 1000));                
+                    $('#download .number').text(Math.round(rate / 1000));
+                    var percent = Math.round(loaded / total * 100);
+                    
+                    if(percent % 10 == 5)
+                        log("Download: " + percent + "% done");
+                    
                 });
                 
                 
                 download.on('finish', function(size, time) {
-                    log('Downloaded '+size+' bytes in '+ time +' ms');
+                    log('Download: '+size+' bytes in '+ time +' ms');
                 });
         
 
