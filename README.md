@@ -1,3 +1,7 @@
+## Demo
+
+http://hvergara.github.com/speedtest.js
+
 ## Usage
 
 ### Latency
