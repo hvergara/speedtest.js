@@ -1,6 +1,6 @@
 ## Demo
 
-http://hvergara.github.com/speedtest.js
+http://hvergara.github.com/speedtest.js/demo.html
 
 ## Usage
 
